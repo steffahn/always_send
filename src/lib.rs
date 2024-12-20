@@ -75,6 +75,9 @@ mod safe {
         /// so you can have full access to it.
         ///
         /// For this reasons, we also don't provides any getter methods, or `.into_inner()`.
+        ///
+        /// Another (private) field in this struct enforces invariance and prevents construction
+        /// other than through methods such as [`AlwaysSend::new`].
         pub inner: T,
         marker: PhantomData<fn() -> *mut T>,
     }
@@ -213,6 +216,12 @@ impl<F: FusedFuture> FusedFuture for AlwaysSend<F> {
 /// Convenience extension trait for easy construction
 /// of the [`AlwaysSend`] wrapper for futures
 /// in method chains.
+///
+/// As an extension trait, you can import this without a name, like
+/// ```
+/// use always_send::FutureExt as _;
+/// ```
+/// for minimizing the potential for ambiguities.
 pub trait FutureExt: Future + Send + Sized {
     fn always_send(self) -> AlwaysSend<Self> {
         AlwaysSend::new(self)
@@ -226,6 +235,12 @@ impl<F: Future + Send> FutureExt for F {}
 /// Convenience extension trait for easy construction
 /// of the [`AlwaysSend`] wrapper for streams
 /// in method chains.
+///
+/// As an extension trait, you can import this without a name, like
+/// ```
+/// use always_send::StreamExt as _;
+/// ```
+/// for minimizing the potential for ambiguities.
 pub trait StreamExt: Stream + Send + Sized {
     fn always_send(self) -> AlwaysSend<Self> {
         AlwaysSend::new(self)
