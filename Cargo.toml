@@ -1,10 +1,10 @@
 [package]
 name = "always_send"
-version = "0.0.0"
+version = "0.1.0"
 authors = ["Frank Steffahn <fdsteffahn@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = """
-Description goes here!!
+Wrapper to check `Send` only on construction, so `rustc` isn’t confused later
 """
 repository = "https://github.com/steffahn/always_send"
 homepage = "https://github.com/steffahn/always_send"
@@ -24,5 +24,4 @@ futures-core = { version = "0.3.31", default-features = false, optional = true}
 
 [package.metadata.docs.rs]
 all-features = true
-# enable unstable features in the documentation
 rustdoc-args = ["--cfg", "docsrs"]
