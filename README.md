@@ -4,16 +4,17 @@
 [![crates.io]](https://crates.io/crates/always_send)
 [![github]](https://github.com/steffahn/always_send)
 [![MIT / Apache 2.0 licensed]](#License)
-[![unsafe forbidden]](https://github.com/rust-secure-code/safety-dance/)
 
 [github]: https://img.shields.io/badge/github-steffahn/always__send-yellowgreen.svg
 [crates.io]: https://img.shields.io/crates/v/always_send.svg
 [MIT / Apache 2.0 licensed]: https://img.shields.io/crates/l/always_send.svg
 [docs.rs]: https://docs.rs/always_send/badge.svg
 [unsafe forbidden]: https://img.shields.io/badge/unsafe-forbidden-success.svg
+[AlwaysSend]: https://docs.rs/always_send/0.1/always_send/struct.AlwaysSend.html
 
+Wrapper type to check `Send` only on construction, so `rustc` isn’t confused.
 
-README documentation goes here!!
+For more context, please refer to the documentation of [`always_send::AlwaysSend`](AlwaysSend).
 
 ## License
 Licensed under either of
