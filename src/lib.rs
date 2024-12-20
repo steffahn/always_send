@@ -83,14 +83,15 @@ mod safe {
     }
 
     /// This is the main feature, an implementation of `Send` *without* reqiring `T: Send`.
+    // SAFETY: all ways of obtaining an (owned or referenced) actual `AlwaysSend` value
+    // at runtime need to go through the `T: Send`-bound API below, and invariance
+    // ensures that once it's constructed, it cannot be used to send anything *other*
+    // than that same `T`, either.
     unsafe impl<T> Send for AlwaysSend<T> {}
 
     /// This wrapper offers structural pinning of the [`inner`][AlwaysSend::inner] field.
     impl<T: Unpin> Unpin for AlwaysSend<T> {}
 
-    // this is because all constructors do require `T: Send`
-    // and invariance ensures there is no way in which
-    // the contained type `T` could change later
     impl<T: Send> AlwaysSend<T> {
         /// Wraps sendable type in the [`AlwaysSend<T>`] wrapper.
         pub fn new(inner: T) -> Self {
@@ -250,4 +251,3 @@ pub trait StreamExt: Stream + Send + Sized {
 #[cfg(feature = "stream")]
 #[cfg_attr(docsrs, doc(cfg(feature = "stream")))]
 impl<S: Stream + Send> StreamExt for S {}
-
